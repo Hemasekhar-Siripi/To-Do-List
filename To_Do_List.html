@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="List_Styles.css">
+</head>
+<body>
+    <div class="container">
+        
+        <div id="newtask">
+          <input type="text" id="taskInput" placeholder="Add task">
+          <button id="add">Add</button>
+          <button id="delete">Delete</button>
+        </div>
+        <div id="tasks"></div>
+        <div id="messages"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addTaskButton = document.getElementById('add');
+            const deleteTaskButton = document.getElementById('delete');
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('tasks');
+            const messages = document.getElementById('messages');
+
+            addTaskButton.addEventListener('click', function () {
+                const taskText = taskInput.value.trim();
+                if (taskText !== '') {
+                    const taskItem = document.createElement('div');
+                    taskItem.classList.add('task-item');
+                    taskItem.textContent = taskText;
+                    taskList.appendChild(taskItem);
+                    taskInput.value = '';
+
+                    // Show success message for adding
+                    showMessage('Successfully added: ' + taskText);
+                }
+            });
+
+            deleteTaskButton.addEventListener('click', function () {
+                const taskItems = taskList.getElementsByClassName('task-item');
+                if (taskItems.length > 0) {
+                    taskList.removeChild(taskItems[taskItems.length - 1]);
+
+                    // Show success message for deleting
+                    showMessage('Successfully deleted the last task.');
+                }
+            });
+
+            function showMessage(message) {
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                messages.appendChild(messageElement);
+
+                // Remove the message after a few seconds
+                setTimeout(function () {
+                    messages.removeChild(messageElement);
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
